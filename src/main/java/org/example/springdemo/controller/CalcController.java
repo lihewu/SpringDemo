@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController          // 1. 战略定位：我是纯数据（JSON）提供者
-@RequestMapping("/calc") // 2. 大门牌号：所有计算相关的操作都来这里
+@RequestMapping("/api/calc") // 2. 大门牌号：所有计算相关的操作都来这里
 public class CalcController {
 
     // 实际寻址路径：GET /calc/add
