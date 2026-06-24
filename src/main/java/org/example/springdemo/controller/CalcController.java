@@ -20,7 +20,6 @@ public class CalcController {
             failResult.setMessage("参数不能为空");
             return failResult;
         }
-
         // 4. 执行核心加法业务逻辑
         int sum = num1 + num2;
 

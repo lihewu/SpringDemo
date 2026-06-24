@@ -8,6 +8,12 @@ import java.io.IOException;
 @RestController
 public class RouteController {
 
+
+    @GetMapping("/login")
+    public void toLoginPage(HttpServletResponse response) throws IOException {
+        response.sendRedirect("/login.html");
+    }
+
     // 🎯 核心魔法：监听浏览器输入的 /calc（不带任何后缀）
     @GetMapping("/calc")
     public void toCalcPage(HttpServletResponse response) throws IOException {

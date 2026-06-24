@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>系统登录</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; text-align: center; padding-top: 100px; }
+        .login-box { background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); display: inline-block; }
+        input { display: block; width: 250px; padding: 10px; margin: 10px auto; border: 1px solid #ccc; border-radius: 4px; }
+        button { width: 270px; padding: 10px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; }
+        button:hover { background: #0056b3; }
+        .error-msg { color: red; margin-top: 10px; font-size: 14px; }
+    </style>
+</head>
+<body>
+
+<div class="login-box">
+    <h2>欢迎登录系统</h2>
+    <input type="text" id="username" placeholder="请输入账号 (测试账号: admin)">
+    <input type="password" id="password" placeholder="请输入密码 (测试密码: 123)">
+    <button onclick="doLogin()">登 录</button>
+    <div id="msg" class="error-msg"></div>
+</div>
+
+<script>
+    function doLogin() {
+        const u = document.getElementById("username").value;
+        const p = document.getElementById("password").value;
+
+        // 使用 URLSearchParams 把参数打包，这种格式等同于表单提交，后端 String 直接能接住
+        const formData = new URLSearchParams();
+        formData.append('username', u);
+        formData.append('password', p);
+
+        // 发送 POST 请求去后端校验
+        fetch('/user/login', {
+            method: 'POST',
+            body: formData
+        })
+        .then(res => res.json())
+        .then(result => {
+            if (result.code === 200) {
+                // 1. 如果正确：清空报错，并让浏览器跳转到首页
+                document.getElementById("msg").innerText = "登录成功！正在跳转...";
+                document.getElementById("msg").style.color = "green";
+                setTimeout(() => {
+                    window.location.href = "/calc.html"; // 跳转核心代码
+                }, 500);
+            } else {
+                // 2. 如果不正确：前端进行用户告知
+                document.getElementById("msg").innerText = result.message;
+            }
+        });
+    }
+</script>
+
+</body>
+</html>
